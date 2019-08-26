@@ -8,7 +8,8 @@ function Sprite(params = {}) {
         vy: 0,
         color: "blue",
         imune: 0,
-        atirando: 0
+        atirando: 0,
+        comportar: undefined
     }
     Object.assign(this, exemplo, params);
 }
@@ -28,3 +29,4 @@ Sprite.prototype.mover = function (dt) {
     this.x = this.x + this.vx * dt;
     this.y = this.y + this.vy * dt;
 }
+

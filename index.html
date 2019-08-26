@@ -18,17 +18,24 @@
         canvas.height = 400;
         var ctx = canvas.getContext("2d");
 
-        var cena1 = new Scene({ ctx: ctx });
+        var cena1 = new Scene({ ctx: ctx, w: canvas.width, h: canvas.height });
         var pc = new Sprite();
         cena1.adicionar(pc);
-        cena1.adicionar(new Sprite({ x: 160, y: 150, w: 15, color: "red" }));
-        cena1.adicionar(new Sprite({ x: 60, y: 250, h: 20, color: "yellow" }));
+        cena1.adicionar(new Sprite({ x: 160, y: 150, w: 15, color: "red", comportar: persegue(pc) }));
+        cena1.adicionar(new Sprite({ x: 60, y: 250, h: 20, color: "yellow", comportar: persegue(pc) }));
         cena1.desenhar();
+
+        function persegue(alvo) {
+            return function () {
+                this.vx = 20 * math.sign(alvo.x - this.x);
+                this.vy = 20 * math.sign(alvo.y - this.y);
+            }
+
+        }
 
         function passo(t) {
             dt = (t - anterior) / 1000;
-            cena1.mover(dt);
-            cena1.desenhar();
+            cena1.passo(dt);
             anterior = t;
             requestAnimationFrame(passo);
         }
