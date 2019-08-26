@@ -17,9 +17,15 @@
         canvas.width = 600;
         canvas.height = 400;
         var ctx = canvas.getContext("2d");
+        var teclas = {
+            esquerda:0,
+            cima:0,
+            direita:0,
+            baixo:0
+        }
 
         var cena1 = new Scene({ ctx: ctx, w: canvas.width, h: canvas.height });
-        var pc = new Sprite();
+        var pc = new Sprite({comportar: porTeclasDirecionais(teclas)});
         cena1.adicionar(pc);
         cena1.adicionar(new Sprite({ x: 160, y: 150, w: 15, color: "red", comportar: persegue(pc) }));
         cena1.adicionar(new Sprite({ x: 60, y: 250, h: 20, color: "yellow", comportar: persegue(pc) }));
@@ -29,7 +35,6 @@
                 this.vx = 20 * Math.sign(alvo.x - this.x);
                 this.vy = 20 * Math.sign(alvo.y - this.y);
             }
-
         }
 
         function passo(t) {
@@ -40,6 +45,48 @@
         }
         var dt, anterior = 0;
         requestAnimationFrame(passo);
+
+        //Configura controles
+        addEventListener("keydown", function (e) {
+            switch (e.keyCode) {
+                
+                case 37:
+                    teclas.esquerda = 1;
+                    break;
+                case 38:
+                    teclas.cima = 1;
+                    break;
+                case 39:
+                    teclas.direita = 1;
+                    break;
+                case 40:
+                    teclas.baixo = 1;
+                    break;
+                default:
+                    break;
+            }
+        });
+
+            addEventListener("keyup", function (e) {
+            switch (e.keyCode) {
+              
+                case 37:
+                    teclas.esquerda = 0;
+                    break;
+                case 38:
+                    teclas.cima = 0;
+                    break;
+                case 39:
+                    teclas.direita = 0;
+                    break;
+                case 40:
+                    teclas.baixo = 0;
+                    break;
+                default:
+                    break;
+            }
+
+        });
 
     </script>
 
