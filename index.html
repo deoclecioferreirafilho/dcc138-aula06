@@ -1,11 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Semana 04</title>
+    <script src="Sprite.js"></script>
+    <script src="Scene.js"></script>
 </head>
+
 <body>
     <canvas></canvas>
     <script>
@@ -13,9 +17,26 @@
         canvas.width = 600;
         canvas.height = 400;
         var ctx = canvas.getContext("2d");
-    
-    
+
+        var cena1 = new Scene({ ctx: ctx });
+        var pc = new Sprite();
+        cena1.adicionar(pc);
+        cena1.adicionar(new Sprite({ x: 160, y: 150, w: 15, color: "red" }));
+        cena1.adicionar(new Sprite({ x: 60, y: 250, h: 20, color: "yellow" }));
+        cena1.desenhar();
+
+        function passo(t) {
+            dt = (t - anterior) / 1000;
+            cena1.mover(dt);
+            cena1.desenhar();
+            anterior = t;
+            requestAnimationFrame(passo);
+        }
+        var dt, anterior = 0;
+        requestAnimationFrame(passo);
+
     </script>
-    
+
 </body>
+
 </html>
