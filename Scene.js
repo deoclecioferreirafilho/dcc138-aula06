@@ -31,7 +31,7 @@ Scene.prototype.mover = function (dt) {
 Scene.prototype.comportar = function (dt) {
     for (var i = 0; i < this.sprites.length; i++){
         if(this.sprites[i].comportar){
-            this.sprites[i].comportar;
+            this.sprites[i].comportar();
         }
     }  
 

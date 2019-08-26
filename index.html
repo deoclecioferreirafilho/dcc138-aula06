@@ -23,12 +23,11 @@
         cena1.adicionar(pc);
         cena1.adicionar(new Sprite({ x: 160, y: 150, w: 15, color: "red", comportar: persegue(pc) }));
         cena1.adicionar(new Sprite({ x: 60, y: 250, h: 20, color: "yellow", comportar: persegue(pc) }));
-        cena1.desenhar();
-
+        
         function persegue(alvo) {
             return function () {
-                this.vx = 20 * math.sign(alvo.x - this.x);
-                this.vy = 20 * math.sign(alvo.y - this.y);
+                this.vx = 20 * Math.sign(alvo.x - this.x);
+                this.vy = 20 * Math.sign(alvo.y - this.y);
             }
 
         }
