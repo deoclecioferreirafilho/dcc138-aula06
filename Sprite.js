@@ -29,15 +29,3 @@ Sprite.prototype.mover = function (dt) {
     this.x = this.x + this.vx * dt;
     this.y = this.y + this.vy * dt;
 }
-
-Sprite.prototype.porTeclasDirecionais = function (opcoes) {
-    if (opcoes.teclas.esquerda) { this.vx = -50; }
-    if (opcoes.teclas.direita) { this.vx = 50; }
-    if (!opcoes.teclas.esquerda && !opcoes.teclas.direita)
-        this.vx = 0;
-    if (opcoes.teclas.cima) { this.vy = -50; }
-    if (opcoes.teclas.baixo) { this.vy = 50; }
-    if (!opcoes.teclas.cima && !opcoes.teclas.baixo)
-        this.vy = 0;
-}
-
