@@ -26,10 +26,27 @@
         }
 
         var cena1 = new Scene({ ctx: ctx, w: canvas.width, h: canvas.height });
-        var pc = new Sprite({ comportar: porTeclasDirecionais(teclas), props:{tipo:"pc"} });
+        var pc = new Sprite({ comportar: porTeclasDirecionais(teclas), props: { tipo: "pc" } });
         cena1.adicionar(pc);
-        cena1.adicionar(new Sprite({ x: 160, y: 150, w: 15, va: -6, vm: 300, color: "red", comportar: persegue2(pc), props:{tipo:"npc"} }));
-        cena1.adicionar(new Sprite({ x: 60, y: 250, h: 20, va: 4, vm: -80, color: "yellow", comportar: persegue2(pc), props:{tipo:"npc"} }));
+        cena1.adicionar(new Sprite({
+            x: 160, y: 150, w: 15, va: -6, vm: 300, color: "red",
+            comportar: persegue2(pc), props: { tipo: "npc" , Spawn:0 }
+        }));
+        cena1.adicionar(new Sprite({
+            x: 60, y: 250, h: 20, va: 4, vm: -80, color: "yellow",
+            comportar: persegue2(pc), props: { tipo: "npc" }
+        }));
+
+        for (var k = 0; k < 10; k++) {
+            cena1.adicionar(new Sprite({
+                x: 300 * Math.random(),
+                y: 400 * Math.random(),
+                h: 20,
+                va: 2 * Math.random(),
+                vm: 40 * Math.random(),
+                color: "red", comportar: persegue2(pc),
+                props: { tipo: "npc" }}));
+        }
 
         function persegue(alvo) {
             return function () {
@@ -44,11 +61,36 @@
                 var dy = alvo.y - this.y;
                 var adj = 1.5;
                 var da = Math.sqrt(dx * dx + dy * dy);
-                var prod = (dx/da) * Math.cos(this.a + adj) + 
-                           (dy/da) * Math.sin(this.a + adj) 
+                var prod = (dx / da) * Math.cos(this.a + adj) +
+                    (dy / da) * Math.sin(this.a + adj)
 
-                this.va = 2 * (prod-0);
+                this.va = 2 * (prod - 0);
                 this.vm = 30;
+            }
+        }
+
+        function persegueSpawn(alvo) {
+            return function () {
+                var dx = alvo.x - this.x;
+                var dy = alvo.y - this.y;
+                var adj = 1.5;
+                var da = Math.sqrt(dx * dx + dy * dy);
+                var prod = (dx / da) * Math.cos(this.a + adj) +
+                    (dy / da) * Math.sin(this.a + adj)
+
+                this.va = 2 * (prod - 0);
+                this.props.Spawn -= (1 / 60);
+                if (this.props.Spawn <= 0) {
+                    this.props.Spawn = 2;
+                    var novo = new Sprite({
+                        x: this.x, y: this.y,
+                        vm: 100 * Math.random(),
+                        props: { tipo: "npc" },
+                        comportar: persegue2(alvo)
+                    });
+                    this.Scene.adicionar(novo);
+                }
+                //this.vm = 30;
             }
         }
 
@@ -62,7 +104,7 @@
                 if (teclas.baixo) { this.vm = -120; }
                 if (teclas.cima === teclas.baixo) { this.vm = 0; }
 
-                if (teclas.espaco && this.cooldown<=0) {
+                if (teclas.espaco && this.cooldown <= 0) {
                     var tiro = new Sprite({
                         x: this.x, y: this.y, a: this.a - 0.1 + 0.2 * Math.random(),
                         vm: 240, color: "green", w: 4, h: 4

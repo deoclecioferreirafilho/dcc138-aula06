@@ -6,8 +6,11 @@ function Sprite(params = {}) {
         w: 10,
         vx: 0,
         vy: 0,
+        ax: 0,
+        ay: 0,
         a: 0,
         vm: 0,
+        am:0,
         props: {},
         cooldown: 0,
         va: 0,
@@ -45,9 +48,11 @@ Sprite.prototype.desenhar = function (ctx) {
 
 Sprite.prototype.mover = function (dt) {
     this.a = this.a + this.va * dt;
+    this.ax = this.am*Math.cos(this.a);
+    this.ay = this.am*Math.sin(this.a);
 
-    this.vx = this.vm * Math.cos(this.a);
-    this.vy = this.vm * Math.sin(this.a);
+    this.vx = this.vx * Math.cos(this.a);
+    this.vy = this.vy * Math.sin(this.a);
 
 
     this.x = this.x + this.vx * dt;
