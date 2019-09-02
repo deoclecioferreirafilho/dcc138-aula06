@@ -28,13 +28,27 @@
         var cena1 = new Scene({ ctx: ctx, w: canvas.width, h: canvas.height });
         var pc = new Sprite({ comportar: porTeclasDirecionais(teclas) });
         cena1.adicionar(pc);
-        cena1.adicionar(new Sprite({ x: 160, y: 150, w: 15, va: -6, vm: 100, color: "red", comportar: persegue(pc) }));
-        cena1.adicionar(new Sprite({ x: 60, y: 250, h: 20, va: 4, vm: -80, color: "yellow", comportar: persegue(pc) }));
+        cena1.adicionar(new Sprite({ x: 160, y: 150, w: 15, va: -6, vm: 300, color: "red", comportar: persegue2(pc) }));
+        cena1.adicionar(new Sprite({ x: 60, y: 250, h: 20, va: 4, vm: -80, color: "yellow", comportar: persegue2(pc) }));
 
         function persegue(alvo) {
             return function () {
                 this.vx = 20 * Math.sign(alvo.x - this.x);
                 this.vy = 20 * Math.sign(alvo.y - this.y);
+            }
+        }
+
+        function persegue2(alvo) {
+            return function () {
+                var dx = alvo.x - this.x;
+                var dy = alvo.y - this.y;
+                var adj = 1.5;
+                var da = Math.sqrt(dx * dx + dy * dy);
+                var prod = (dx/da) * Math.cos(this.a + adj) + 
+                           (dy/da) * Math.sin(this.a + adj) 
+
+                this.va = 2 * (prod-0);
+                //this.vm = 30;
             }
         }
 
