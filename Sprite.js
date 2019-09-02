@@ -8,6 +8,7 @@ function Sprite(params = {}) {
         vy: 0,
         a: 0,
         vm: 0,
+        props: {},
         cooldown: 0,
         va: 0,
         color: "blue",

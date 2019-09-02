@@ -47,12 +47,17 @@ Scene.prototype.checaColisao = function (dt) {
     for (var i = 0; i < this.sprites.length; i++) {
         for (var j = i + 1; j < this.sprites.length; j++) {
             if (this.sprites[i].colidiuCom(this.sprites[j])) {
-                this.toRemove.push(this.sprites[j]);
-
+                if (this.sprites[i].props.tipo === "pc" && this.sprites[j].props.tipo === "npc") {
+                    this.toRemove.push(this.sprites[j]);
+                }
+                else
+                    if (this.sprites[i].props.tipo === "npc" && this.sprites[j].props.tipo === "tiro") {
+                        this.toRemove.push(this.sprites[i]);
+                        this.toRemove.push(this.sprites[j]);
+                    }
             }
         }
     }
-
 
 }
 
